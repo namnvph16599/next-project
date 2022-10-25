@@ -10,7 +10,7 @@ export default function ProductsParams(props: IProductsParamsProps) {
 
     return (
         <div>
-            ProductsParams
+            ProductsParams 
         </div>
     );
 }
