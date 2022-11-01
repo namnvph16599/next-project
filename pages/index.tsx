@@ -16,7 +16,9 @@ export async function getStaticProps() {
     props: {
       data
     },
-    revalidate: 10
+    revalidate: 10 //Incremental Static Regenration (ISR),
+    // notFound : boolean; checking if data null retrun true 404 page
+    //redirect
   }
 }
 
