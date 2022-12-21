@@ -15,8 +15,12 @@ const PostDetails = (props: any) => {
 	);
 };
 
+const getDataPost = async () => {
+	const response = await fetch('http://localhost:8080/post');
+	return response.json();
+};
+
 export async function getStaticProps(context: any) {
-	console.log(1111111, context);
 	const { params } = context;
 	const postId = +params.postId;
 	if (!postId) {
@@ -24,10 +28,7 @@ export async function getStaticProps(context: any) {
 			notFound: true,
 		};
 	}
-	const response = await fetch('http://jsonplaceholder.typicode.com/posts');
-	const posts = await response.json();
-	console.log('postId', postId);
-
+	const posts = await getDataPost()
 	const post = posts.find((post: any) => post.id === postId);
 	return {
 		props: {
@@ -37,13 +38,13 @@ export async function getStaticProps(context: any) {
 }
 
 export async function getStaticPaths() {
-	const response = await fetch('http://jsonplaceholder.typicode.com/posts');
-	const posts = await response.json();
+    const posts = await getDataPost()
 	const params = posts.map((post: any) => ({ params: { postId: post.id.toString() } }));
+	// const params = [{ params: { postId: '1' } }];
 	return {
 		paths: params,
 		fallback: false,
-        //if fallback : fasle thi nhung path kh tra ve ở params khi truy cập vào sẽ chạy vào 404 page
+		//if fallback : fasle thi nhung path kh tra ve ở params khi truy cập vào sẽ chạy vào 404 page
 		// if fallback : true khi những params kh được pre rendering phải xử check empty truócw khi render
 		//if fallback :'blocking' có thể kh cần check empty vì sẽ được pre rendering trên server đợi server load xong => return về detail pages
 	};

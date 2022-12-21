@@ -1,15 +1,16 @@
 import type { NextPage } from 'next'
+import Link from 'next/link';
 
 const Home: NextPage = (props: any) => {
   const { data } = props
   return <ul>
-    {data.map((value: any) => <li key={value.id}>{value.title}</li>)}
+    {data.map((value: any) => <li key={value.id}><Link href={`${value.id}`}>{value.title}</Link></li>)}
   </ul>
 }
 
 export async function getStaticProps() {
   console.log(11111);
-  const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+  const response = await fetch('http://localhost:8080/post')
   const data = await response.json();
 
   return {
