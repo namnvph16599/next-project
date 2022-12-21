@@ -30,6 +30,11 @@ export async function getStaticProps(context: any) {
 	}
 	const posts = await getDataPost()
 	const post = posts.find((post: any) => post.id === postId);
+    if (!post) {
+		return {
+			notFound: true,
+		};
+    }
 	return {
 		props: {
 			post,
